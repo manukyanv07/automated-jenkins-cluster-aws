@@ -1,0 +1,40 @@
+{
+  "variables" : {
+    "region" : "us-east-1",
+    "source_ami" : "ami-062f7200baf2fa504"
+  },
+  "builders" : [
+    {
+      "type" : "amazon-ebs",
+      "region" : "{{user `region`}}",
+      "profile" : "packer",
+      "instance_type" : "t2.micro",
+      "source_ami" : "{{user `source_ami`}}",
+      "ssh_username" : "ec2-user",
+      "ami_name" : "jenkins-master-1.0",
+      "ami_description" : "Amazon Linux Image with Jenkins Server",
+      "force_deregister": "true",
+      "force_delete_snapshot": "true",
+      "run_tags" : {
+        "Name" : "packer-builder-docker"
+      },
+      "tags" : {
+        "Tool" : "Packer",
+        "Author" : "manuscript",
+        "Name" : "Jenkins Master AMI"
+      }
+    }
+  ],
+  "provisioners" : [
+    {
+      "type": "file",
+      "source": "./jenkins-cfg/",
+      "destination": "/tmp/"
+    },
+    {
+      "type" : "shell",
+      "script" : "./scripts/setup-master.sh",
+      "execute_command" : "sudo -E -S sh '{{ .Path }}'"
+    }
+  ]
+}

@@ -1,0 +1,111 @@
+#!/bin/bash
+jenkins:
+  systemMessage: "Testing"
+plugins:
+  - artifactId: git
+    source:
+      version: latest
+  - artifactId: aws-java-sdk
+    source:
+      version: latest
+  - artifactId: aws-credentials
+    source:
+      version: latest
+  - artifactId: credentials
+    source:
+      version: latest
+  - artifactId: ssh-agent
+    source:
+      version: latest
+  - artifactId: ssh
+    source:
+      version: latest
+  - artifactId: ssh-credentials
+    source:
+      version: latest
+  - artifactId: blueocean
+    source:
+      version: latest
+  - artifactId: pollscm
+    source:
+      version: latest
+  - artifactId: github
+    source:
+      version: latest
+  - artifactId: credentials-binding
+    source:
+      version: latest
+  - artifactId: gradle
+    source:
+      version: latest
+  - artifactId: subversion
+    source:
+      version: latest
+  - artifactId: ldap
+    source:
+      version: latest
+  - artifactId: matrix-auth
+    source:
+      version: latest
+  - artifactId: github-branch-source
+    source:
+      version: latest
+  - artifactId: timestamper
+    source:
+      version: latest
+  - artifactId: email-ext
+    source:
+      version: latest
+  - artifactId: build-timeout
+    source:
+      version: latest
+  - artifactId: workflow-aggregator
+    source:
+      version: latest
+  - artifactId: pipeline-stage-view
+    source:
+      version: latest
+  - artifactId: github-branch-source
+    source:
+      version: latest
+  - artifactId: pipeline-github-lib
+    source:
+      version: latest
+  - artifactId: mailer
+    source:
+      version: latest
+  - artifactId: antisamy-markup-formatter
+    source:
+      version: latest
+  - artifactId: gradle
+    source:
+      version: latest
+  - artifactId: ws-cleanup
+    source:
+      version: latest
+  - artifactId: pam-auth
+    source:
+      version: latest
+  - artifactId: ssh-slaves
+    source:
+      version: latest
+  - artifactId: scm-api
+    source:
+      version: latest
+  - artifactId: script-security
+    source:
+      version: latest
+  - artifactId: jdk-tool
+    source:
+      version: latest
+  - artifactId: handy-uri-templates-2-api
+    source:
+      version: latest
+  - artifactId: jackson2-api
+    source:
+      version: latest
+tool:
+  git:
+    installations:
+    - home: "git"
+      name: "Default"

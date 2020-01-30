@@ -1,0 +1,45 @@
+{
+  "variables": {
+    "region": "us-east-1",
+    "source_ami": "ami-062f7200baf2fa504"
+  },
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "profile": "packer",
+      "region": "{{user `region`}}",
+      "instance_type": "t2.micro",
+      "source_ami": "{{user `source_ami`}}",
+      "ssh_username": "ec2-user",
+      "ami_name": "jenkins-worker-1.0",
+      "force_deregister": "true",
+      "force_delete_snapshot": "true",
+      "ami_description": "Amazon Linux Image for Jenkins Slave",
+      "run_tags": {
+        "Name": "packer-builder-docker"
+      },
+      "tags": {
+        "Tool": "Packer",
+        "Author": "manuscript",
+        "Name": "Jenkins Worker AMI"
+      }
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "file",
+      "source": "./jenkins-cfg/id_rsa",
+      "destination": "/tmp/id_rsa"
+    },
+    {
+      "type": "file",
+      "source": "./jenkins-cfg/id_rsa.pub",
+      "destination": "/tmp/id_rsa.pub"
+    },
+    {
+      "type": "shell",
+      "script": "./scripts/setup-worker.sh",
+      "execute_command": "sudo -E -S sh '{{ .Path }}'"
+    }
+  ]
+}
