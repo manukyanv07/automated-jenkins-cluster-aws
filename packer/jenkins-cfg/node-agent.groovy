@@ -20,12 +20,4 @@ slavesPrivateKey = new BasicSSHUserPrivateKey(
         ""
 )
 
-githubCredentials = new UsernamePasswordCredentialsImpl(
-        CredentialsScope.GLOBAL,
-        "github", "Github credentials",
-        "USERNAME",
-        "PASSWORD"
-)
-
 store.addCredentials(domain, slavesPrivateKey)
-store.addCredentials(domain, githubCredentials)

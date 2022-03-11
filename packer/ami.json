@@ -1,40 +1,48 @@
 {
-  "variables" : {
-    "region" : "us-east-1",
-    "source_ami" : "ami-062f7200baf2fa504"
+  "variables": {
+    "region": "us-east-1",
+    "source_ami": "ami-0ed9277fb7eb570c9"
   },
-  "builders" : [
+  "builders": [
     {
-      "type" : "amazon-ebs",
-      "region" : "{{user `region`}}",
-      "profile" : "packer",
-      "instance_type" : "t2.micro",
-      "source_ami" : "{{user `source_ami`}}",
-      "ssh_username" : "ec2-user",
-      "ami_name" : "jenkins-master-1.0",
-      "ami_description" : "Amazon Linux Image with Jenkins Server",
+      "type": "amazon-ebs",
+      "region": "{{user `region`}}",
+      "profile": "packer",
+      "instance_type": "t3.micro",
+      "source_ami": "{{user `source_ami`}}",
+      "ssh_username": "ec2-user",
+      "ami_name": "jenkins-master-1.0",
+      "ami_description": "Amazon Linux Image with Jenkins Server",
       "force_deregister": "true",
       "force_delete_snapshot": "true",
-      "run_tags" : {
-        "Name" : "packer-builder-docker"
+      "run_tags": {
+        "Name": "packer-builder-docker"
       },
-      "tags" : {
-        "Tool" : "Packer",
-        "Author" : "manuscript",
-        "Name" : "Jenkins Master AMI"
+      "vpc_id": "vpc-f7ed4991",
+      "subnet_filter": {
+        "filters": {
+          "state": "available"
+        },
+        "most_free": true,
+        "random": true
+      },
+      "tags": {
+        "Tool": "Packer",
+        "Author": "manuscript",
+        "Name": "Jenkins Master AMI"
       }
     }
   ],
-  "provisioners" : [
+  "provisioners": [
     {
       "type": "file",
       "source": "./jenkins-cfg/",
       "destination": "/tmp/"
     },
     {
-      "type" : "shell",
-      "script" : "./scripts/setup-master.sh",
-      "execute_command" : "sudo -E -S sh '{{ .Path }}'"
+      "type": "shell",
+      "script": "./scripts/setup-master.sh",
+      "execute_command": "sudo -E -S sh '{{ .Path }}'"
     }
   ]
 }

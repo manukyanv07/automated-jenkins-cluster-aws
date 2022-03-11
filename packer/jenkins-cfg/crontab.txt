@@ -1,0 +1,1 @@
+17 15 * * * root /tmp/backupjobs.sh

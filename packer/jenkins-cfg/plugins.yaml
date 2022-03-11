@@ -8,6 +8,9 @@ plugins:
   - artifactId: aws-java-sdk
     source:
       version: latest
+  - artifactId: amazon-ecr
+    source:
+      version: latest
   - artifactId: aws-credentials
     source:
       version: latest
@@ -29,25 +32,10 @@ plugins:
   - artifactId: pollscm
     source:
       version: latest
-  - artifactId: github
-    source:
-      version: latest
   - artifactId: credentials-binding
     source:
       version: latest
   - artifactId: gradle
-    source:
-      version: latest
-  - artifactId: subversion
-    source:
-      version: latest
-  - artifactId: ldap
-    source:
-      version: latest
-  - artifactId: matrix-auth
-    source:
-      version: latest
-  - artifactId: github-branch-source
     source:
       version: latest
   - artifactId: timestamper
@@ -63,12 +51,6 @@ plugins:
     source:
       version: latest
   - artifactId: pipeline-stage-view
-    source:
-      version: latest
-  - artifactId: github-branch-source
-    source:
-      version: latest
-  - artifactId: pipeline-github-lib
     source:
       version: latest
   - artifactId: mailer
@@ -104,6 +86,34 @@ plugins:
   - artifactId: jackson2-api
     source:
       version: latest
+  - artifactId: bouncycastle-api
+    source:
+      version: latest
+  - artifactId: branch-api
+    source:
+      version: latest
+  - artifactId: nodejs
+    source:
+      version: 1.5.1
+  - artifactId: aws-secrets-manager-credentials-provider
+    source:
+      version: latest
+  - artifactId: codedeploy
+    source:
+      version: latest
+  - artifactId: postbuildscript
+    source:
+      version: latest
+  - artifactId: discard-old-build
+    source:
+      version: latest
+  - artifactId: slack
+    source:
+      version: latest
+  - artifactId: pipeline-aws
+    source:
+      version: 1.41
+
 tool:
   git:
     installations:

@@ -1,7 +1,7 @@
 {
   "variables": {
     "region": "us-east-1",
-    "source_ami": "ami-062f7200baf2fa504"
+    "source_ami": "ami-0ed9277fb7eb570c9"
   },
   "builders": [
     {
@@ -17,6 +17,14 @@
       "ami_description": "Amazon Linux Image for Jenkins Slave",
       "run_tags": {
         "Name": "packer-builder-docker"
+      },
+      "vpc_id": "vpc-f7ed4991",
+      "subnet_filter": {
+        "filters": {
+          "state": "available"
+        },
+        "most_free": true,
+        "random": true
       },
       "tags": {
         "Tool": "Packer",

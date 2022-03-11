@@ -1,0 +1,4 @@
+[default]
+role_arn = arn:aws:iam::111423527333:role/JenkinsECSRole
+
+credential_source = Ec2InstanceMetadata
