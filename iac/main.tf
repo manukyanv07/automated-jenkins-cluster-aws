@@ -1,6 +1,14 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 3.0"
+    }
+  }
+}
+
 # Configure the AWS Provider
 provider "aws" {
-  version = "~> 2.0"
   region = "us-east-1"
 }
 
@@ -158,8 +166,8 @@ resource "aws_autoscaling_group" "jenkins_slaves" {
     "us-east-1a",
     "us-east-1b"]
   depends_on = [
-    "aws_instance.jenkins_master",
-    "aws_elb.jenkins_elb"]
+    aws_instance.jenkins_master,
+    aws_elb.jenkins_elb]
   lifecycle {
     create_before_destroy = true
   }
@@ -182,7 +190,7 @@ resource "aws_autoscaling_group" "jenkins_slaves" {
 
 data "template_file" "user_data_slave" {
   template = "${file("join-cluster.sh")}"
-  depends_on = ["aws_instance.jenkins_master"]
+  depends_on = [aws_instance.jenkins_master]
   vars = {
     jenkins_url = "http://${aws_instance.jenkins_master.private_ip}:8080"
     jenkins_username = "admin"

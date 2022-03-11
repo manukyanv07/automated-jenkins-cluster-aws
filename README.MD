@@ -32,6 +32,9 @@ aws_secret_access_key = AgcYcxxxxqxxxxxxxxxxxxxxxxx/rNKCaovBQ2W6
 aws_access_key_id=AKIxxxxxxxxxxxxxxxXBQA
 aws_secret_access_key=2qEMy1UxxxxxxxxxxxxxxxxxxxxxxBHxCyFPzJHHxn
 ```
+
+##### Instance Prerequisites
+
 ####Build
 Run packer build ami and worker ami to generate Master and Worker AMIs.
 ```
@@ -40,34 +43,25 @@ packer build ami.json
 packer build worker-ami.json
 ```
 #### Verify
-Once builds are done, verify your account for the 2 AMIs.
-
-### Jenkins Cluster infrastructure.
-
-Once we have Jenkins golden AMIs now we can start creating our Jenkins Cluster. 
-
-### Infrastructure plan
-
-Run the following command from "/iac" folder to generate terraform plan.
-
-```
-terraform plan
-```
+Once builds are done, verify your account for the 2 AMIs. 
 
 ### Create infrastructure.
 
-If the plan looks good you can go ahead and apply that.
+Log into your aws account and launch new instance from master AMI 
 
-```
-terraform apply
-```
+make sure to choose `JenkinsEC2Profile` as instance profile
+
+make sure to choose correct security group to allow access to git instance (TSG Jenkins Instances)
+
 ### Verify
-Log into your AWS console, and check for master EC2 instance. you should be able to access http://your.master.server.ip:8080 with admin/admin credentials. and verify a single workers has properly joined the master instance. 
+Log into your AWS console, and check for master EC2 instance. you should be able to access http://your.master.server.ip:8080 with admin/admin credentials.
+
+###
+After you verify jenkins, change route53 domain to start pointing to your new instance.
 
 ## Built With
 
 * [Packer](https://www.packer.io/docs/) - Open source tool for creating identical machine images for multiple platforms. 
-* [Terraform](https://www.terraform.io/docs/index.html) - Terraform is a tool for building, changing, and versioning infrastructure safely and efficiently
 * [AWS Cli](https://aws.amazon.com/cli/) - The AWS Command Line Interface (CLI) is a unified tool to manage your AWS services.
 
 ## Authors
