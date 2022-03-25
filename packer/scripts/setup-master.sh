@@ -46,6 +46,15 @@ chmod 700 /var/lib/jenkins/.ssh
 mv /tmp/id_rsa /var/lib/jenkins/.ssh/id_rsa
 mv /tmp/humazemd.pem /var/lib/jenkins/.ssh/
 chmod 600 /var/lib/jenkins/.ssh/id_rsa
+chown jenkins:jenkins /var/lib/jenkins/.ssh/id_rsa
+
+
+echo "CONFIGURE SSL CERTIFICATES"
+keytool -genkey -keyalg RSA -alias treehouse -dname "CN=jenkins.treehouse-holdings.com, OU=TH, O=Treehouse, L=Rayn, S=ondo, C=GB"  -keystore jenkins_keystore.jks -storepass super$3cr3t -keysize 4096 -keypass super$3cr3t
+
+sudo mv /tmp/jenkins /etc/sysconfig/jenkins
+sudo chmod 600 /etc/sysconfig/jenkins
+sudo chown jenkins:jenkins /home/ec2-user/jenkins_keystore.jks
 
 echo "Configure Jenkins"
 mkdir -p /var/lib/jenkins/init.groovy.d
@@ -73,8 +82,9 @@ mv /tmp/disable-jnlp.groovy /var/lib/jenkins/init.groovy.d/disable-jnlp.groovy
 mv /tmp/node-agent.groovy /var/lib/jenkins/init.groovy.d/node-agent.groovy
 
 echo "##############################Configure jobs backup###################################"
-chmod +x /tmp/backupjobs.sh
-crontab /tmp/crontab.txt
+sudo chmod +x /tmp/backupjobs.sh
+sudo crontab /tmp/crontab.txt
+crontab -l
 
 echo "##################################Humaze Access#####################################"
 mv /tmp/humazemd.pem /var/lib/jenkins/.ssh/humazemd.pem
