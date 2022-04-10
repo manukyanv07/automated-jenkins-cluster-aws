@@ -4,6 +4,7 @@ echo "Install Jenkins stable release"
 yum remove -y java
 yum install -y java-1.8.0-openjdk
 yum install -y wget
+yum install -y jq
 
 curl -LO 'https://rpmfind.net/linux/epel/7/x86_64/Packages/d/daemonize-1.7.7-1.el7.x86_64.rpm'
 sudo rpm -Uvh ./daemonize-1.7.7-1.el7.x86_64.rpm
@@ -29,6 +30,15 @@ sudo rpm --import https://pkg.jenkins.io/redhat/jenkins.io.key
 yum install -y epel-release # repository that provides 'daemonize'
 yum install -y java-11-openjdk-devel
 yum install -y jenkins
+
+
+#Install docker
+sudo yum install -y docker
+sudo groupadd docker
+sudo usermod -aG docker jenkins
+sudo touch /etc/profile.d/dockerhost.sh
+sudo echo "export DOCKER_HOST=unix:///var/run/docker.sock" > /etc/profile.d/dockerhost.sh
+sudo chmod o+w /var/run/docker.sock
 
 systemctl daemon-reload
 chkconfig jenkins on
@@ -87,7 +97,6 @@ sudo crontab /tmp/crontab.txt
 crontab -l
 
 echo "##################################Humaze Access#####################################"
-mv /tmp/humazemd.pem /var/lib/jenkins/.ssh/humazemd.pem
 chmod 400 /var/lib/jenkins/.ssh/humazemd.pem
 chown -R jenkins:jenkins /var/lib/jenkins/.ssh/humazemd.pem
 ls -al /var/lib/jenkins/.ssh/
@@ -95,12 +104,16 @@ echo "Download jobs"
 git clone https://vmanukyan:bgSmxtuniK_6YVYAS_4s@git.treehouse-holdings.com/vmanukyan/jenkins-jobs.git
 ls jenkins-jobs
 cp -R jenkins-jobs/* /var/lib/jenkins/jobs/
+cp jenkins-jobs/config/*.xml /var/lib/jenkins/
+
 chown -R jenkins:jenkins /var/lib/jenkins/jobs/*
-
-cp /tmp/jenkins.plugins.slack.SlackNotifier.xml /var/lib/jenkins/
-cp /tmp/jenkins.plugins.nodejs.tools.NodeJSInstallation.xml /var/lib/jenkins/
-
 chown -R jenkins:jenkins /var/lib/jenkins/*.xml
+
+ls /var/lib/jenkins/jobs
+ls /var/lib/jenkins/
+ls /tmp
+
+crontab -l
 
 systemctl restart jenkins
 sleep 15s
